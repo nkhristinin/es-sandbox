@@ -2,8 +2,10 @@ import { useState } from 'react';
 import NextApp, { AppProps, AppContext } from 'next/app';
 import { getCookie, setCookie } from 'cookies-next';
 import Head from 'next/head';
-import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
+import { Provider } from 'react-redux';
+import { MantineProvider, ColorScheme, ColorSchemeProvider, AppShell, Header } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
+import { store } from '../store';
 
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
@@ -22,13 +24,34 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
         <meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
         <link rel="shortcut icon" href="/favicon.svg" />
       </Head>
+      <Provider store={store}>
+        <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
+          <MantineProvider
+            theme={{
+              colorScheme,
+              globalStyles: () => ({
+                body: {
+                  'overscroll-behavior-x': 'contain',
+                },
+              }),
+            }}
+            withGlobalStyles
+            withNormalizeCSS
+          >
+            <AppShell
+              padding={0}
+              header={<Header height={60} p="xs">{/* Header content */}</Header>}
+              styles={(theme) => ({
+                main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
+              })}
+            >
+              <Component {...pageProps} />
+            </AppShell>
 
-      <ColorSchemeProvider colorScheme={colorScheme} toggleColorScheme={toggleColorScheme}>
-        <MantineProvider theme={{ colorScheme }} withGlobalStyles withNormalizeCSS>
-          <Component {...pageProps} />
-          <Notifications />
-        </MantineProvider>
-      </ColorSchemeProvider>
+            <Notifications />
+          </MantineProvider>
+        </ColorSchemeProvider>
+      </Provider>
     </>
   );
 }
