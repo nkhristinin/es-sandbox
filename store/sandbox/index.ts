@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import type { RootState } from '../index';
+import { Order } from '../../types/index';
 
 // Define a type for the slice state
 interface SandboxState {
@@ -49,11 +50,11 @@ export const fetchData = createAsyncThunk(
   async (query, { getState }) => {
     const response = await fetch('/api/search', {
       method: 'POST',
-      body: getQuery(getState()),
+      body: getQuery(getState() as RootState),
     });
 
     // Inferred return type: Promise<MyData>
-    return (await response.json()) as MyData;
+    return (await response.json()) as Order[];
   }
 );
 

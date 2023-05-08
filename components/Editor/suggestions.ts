@@ -11,34 +11,11 @@ function createDependencyProposals(monaco: MonacoEditor, range:any) {
     // here you could do a server side lookup
     return [
         {
-            label: '"match-byfield"',
+            label: '"match-by-field"',
             kind: monaco.languages.CompletionItemKind.Function,
             documentation: 'The Lodash library exported as Node.js modules.',
             insertText: matchByField,
             insertTextRules: monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
-            range,
-        },
-        {
-            label: '"express"',
-            kind: monaco.languages.CompletionItemKind.Function,
-            documentation: 'Fast, unopinionated, minimalist web framework',
-            insertText: '"express": "*"',
-            range,
-        },
-        {
-            label: '"mkdirp"',
-            kind: monaco.languages.CompletionItemKind.Function,
-            documentation: 'Recursively mkdir, like <code>mkdir -p</code>',
-            insertText: '"mkdirp": "*"',
-            range,
-        },
-        {
-            label: '"my-third-party-library"',
-            kind: monaco.languages.CompletionItemKind.Function,
-            documentation: 'Describe your library here',
-            insertText: '"${1:my-third-party-library}": "${2:1.2.3}"',
-            insertTextRules:
-                monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet,
             range,
         },
     ];
