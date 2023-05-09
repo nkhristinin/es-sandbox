@@ -1,24 +1,43 @@
 import React from 'react';
-import { Container } from '@mantine/core';
+import { Prism } from '@mantine/prism';
+import { Center, Image, Stack, Text, Button, LoadingOverlay } from '@mantine/core';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store/hooks';
-import { getHits, fetchData } from '../../store/sandbox';
+import { getHits, getResponse, fetchData, getLoadingStatus } from '../../store/sandbox';
 import { HitsTable } from '../HitsTable/HitsTable';
 
-export function ResponseSection() {
+export function ResponseSection({ responseMode }: { responseMode: string }) {
     const hits = useSelector(getHits);
+    const response = useSelector(getResponse);
+    const loadingStatus = useSelector(getLoadingStatus);
     const dispatch = useAppDispatch();
 
+    if (loadingStatus === 'idle') {
+        return (
+            <Center h="100%">
+                <Stack>
+                    <Center>
+                        <Image width={100} src="./search.png" />
+                    </Center>
+                    <Text>You don't have any data yet</Text>
+                    <Button onClick={() => { dispatch(fetchData()); }}> Make request</Button>
+                </Stack>
+            </Center>
+        );
+    }
+
     return (
-        <Container>
-            <button
-              type="button"
-              onClick={() => {
-                dispatch(fetchData());
-            }}
-            > Fetch
-            </button>
-            <HitsTable hits={hits} />
-        </Container>
+        <>
+            <LoadingOverlay visible={loadingStatus === 'pending'} overlayBlur={2} />
+            {responseMode === 'preview' && (<HitsTable hits={hits} />)}
+            {responseMode === 'json' && (
+                <Prism
+                  language="json"
+                  withLineNumbers
+                >
+                    {JSON.stringify(response, null, 2)}
+                </Prism>)}
+
+        </>
     );
 }

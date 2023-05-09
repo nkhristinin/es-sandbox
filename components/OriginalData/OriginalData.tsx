@@ -1,5 +1,4 @@
 import React, { useEffect } from 'react';
-import { Container } from '@mantine/core';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store/hooks';
 import { getHits, fetchOriginalData, getLoadingStatus } from '../../store/originalData';
@@ -17,8 +16,8 @@ export function OriginalData() {
     }, [fetchOriginalData, loadingStatus]);
 
     return (
-        <Container>
-           <HitsTable hits={hits} />
-        </Container>
+        <>
+                <HitsTable hits={hits} />
+        </>
     );
 }

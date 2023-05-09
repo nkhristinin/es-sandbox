@@ -10,20 +10,11 @@ interface SandboxState {
   error: string | undefined,
 }
 
-const defaultQuery = `
-{
- "aggs": {
-    "price_ranges": {
-        "range": {
-          "field": "price",
-          "ranges": [
-            { "to": 100.0 },
-            { "from": 100.0, "to": 200.0 },
-            { "from": 200.0 }
-          ]
-        }
-      }
-    }
+const defaultQuery = `{
+  "query": {
+    "match_all": {}
+  },
+  "size": 15
 }
 `;
 
@@ -35,11 +26,13 @@ const initialState: SandboxState = {
   error: '',
 };
 
-// Other code such as selectors can use the imported `RootState` type
-export const getHits = (state: RootState) => state
-  .sandbox?.data?.hits?.hits?.map((hit:any) => hit._source) ?? [];
 
-  // Other code such as selectors can use the imported `RootState` type
+export const getHits = (state: RootState) => state
+  .sandbox?.data?.hits?.hits?.map((hit: any) => hit._source) ?? [];
+
+export const getResponse = (state: RootState) => state
+  .sandbox?.data;
+
 export const getQuery = (state: RootState) => state.sandbox.query;
 
 export const getLoadingStatus = (state: RootState) => state.sandbox.loading;

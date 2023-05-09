@@ -3,10 +3,9 @@ import NextApp, { AppProps, AppContext } from 'next/app';
 import { getCookie, setCookie } from 'cookies-next';
 import Head from 'next/head';
 import { Provider } from 'react-redux';
-import { MantineProvider, ColorScheme, ColorSchemeProvider, AppShell } from '@mantine/core';
+import { MantineProvider, ColorScheme, ColorSchemeProvider } from '@mantine/core';
 import { Notifications } from '@mantine/notifications';
 import { store } from '../store';
-import { Header } from '../components/Header/Header';
 
 export default function App(props: AppProps & { colorScheme: ColorScheme }) {
   const { Component, pageProps } = props;
@@ -39,16 +38,7 @@ export default function App(props: AppProps & { colorScheme: ColorScheme }) {
             withGlobalStyles
             withNormalizeCSS
           >
-            <AppShell
-              padding={0}
-              header={<Header />}
-              styles={(theme) => ({
-                main: { backgroundColor: theme.colorScheme === 'dark' ? theme.colors.dark[8] : theme.colors.gray[0] },
-              })}
-            >
-              <Component {...pageProps} />
-            </AppShell>
-
+            <Component {...pageProps} />
             <Notifications />
           </MantineProvider>
         </ColorSchemeProvider>
