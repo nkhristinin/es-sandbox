@@ -19,8 +19,8 @@ export function ResponseSection({ responseMode }: { responseMode: string }) {
                     <Center>
                         <Image width={100} src="./search.png" />
                     </Center>
-                    <Text>You don't have any data yet</Text>
-                    <Button onClick={() => { dispatch(fetchData()); }}> Make request</Button>
+                    <Text>No data to show you yet</Text>
+                    <Button onClick={() => { dispatch(fetchData()); }}> Send request</Button>
                 </Stack>
             </Center>
         );

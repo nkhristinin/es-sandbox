@@ -1,5 +1,5 @@
 import React from 'react';
-import { createStyles, Title, Group, Flex } from '@mantine/core';
+import { createStyles, Title, Group } from '@mantine/core';
 import { Top } from 'react-spaces';
 
 const useStyles = createStyles(() => ({

@@ -1,5 +1,6 @@
 import React from 'react';
 import MonacoEditor from '@monaco-editor/react';
+import { MonacoEditor as MonacoType, editor } from 'monaco-types';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store/hooks';
 import { getQuery, fetchData, changeQuery } from '../../store/sandbox';
@@ -19,17 +20,18 @@ export function Editor() {
     // const model = monaco.editor.createModel(query, 'json', modelUri);
   }
 
-  function handleEditorDidMount(editor, monaco) {
+  function handleEditorDidMount(e: editor.IStandaloneCodeEditor, monaco: MonacoType) {
     // here is the editor instance
     // you can store it in `useRef` for further usage
-    editor.addAction({
+    e.addAction({
       id: 'send-request',
       label: 'Send request',
       keybindings: [
-        monaco.KeyMod.chord(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter),
+        // eslint-disable-next-line no-bitwise
+        monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter,
       ],
 
-      keybindingContext: null,
+      keybindingContext: undefined,
       contextMenuGroupId: 'help',
       contextMenuOrder: 1.5,
       run: () => { dispatch(fetchData()); },

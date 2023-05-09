@@ -26,7 +26,6 @@ const initialState: SandboxState = {
   error: '',
 };
 
-
 export const getHits = (state: RootState) => state
   .sandbox?.data?.hits?.hits?.map((hit: any) => hit._source) ?? [];
 
