@@ -12,7 +12,7 @@ export function Editor() {
   const dispatch = useAppDispatch();
   const modelUri = 'a://b/foo.json';
 
-  function handleEditorWillMount(monaco: any) {
+  function handleEditorWillMount(monaco: MonacoType) {
     // here is the monaco instance
     // do something before editor is mounted
 
