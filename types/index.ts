@@ -60,3 +60,10 @@ export interface GeoIP {
 export interface Event {
     dataset: string;
 }
+
+export type Aggregation = {
+    name: string;
+    type: string;
+    [x: string]: any;
+    subAggregations?: string[];
+  };

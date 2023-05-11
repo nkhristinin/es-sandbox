@@ -1,16 +1,22 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import MonacoEditor from '@monaco-editor/react';
 import { MonacoEditor as MonacoType, editor } from 'monaco-types';
 import { useSelector } from 'react-redux';
 import { useAppDispatch } from '../../store/hooks';
-import { getQuery, fetchData, changeQuery } from '../../store/sandbox';
+import { getQuery, fetchData, changeQuery, getChosenQuery } from '../../store/sandbox';
 
 import { applySuggestions } from './suggestions';
 
 export function Editor() {
+  const editorRef = useRef<editor.IStandaloneCodeEditor | null>(null);
   const query = useSelector(getQuery);
+  const chosenQuery = useSelector(getChosenQuery);
   const dispatch = useAppDispatch();
   const modelUri = 'a://b/foo.json';
+
+  useEffect(() => {
+    editorRef.current?.setValue(chosenQuery);
+  }, [chosenQuery]);
 
   function handleEditorWillMount(monaco: MonacoType) {
     // here is the monaco instance
@@ -23,6 +29,7 @@ export function Editor() {
   function handleEditorDidMount(e: editor.IStandaloneCodeEditor, monaco: MonacoType) {
     // here is the editor instance
     // you can store it in `useRef` for further usage
+    editorRef.current = e;
     e.addAction({
       id: 'send-request',
       label: 'Send request',

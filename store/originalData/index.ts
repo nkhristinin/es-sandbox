@@ -1,8 +1,7 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import { createSlice, createAsyncThunk, createSelector } from '@reduxjs/toolkit';
 
 import type { RootState } from '../index';
 
-// Define a type for the slice state
 interface OriginalDataState {
   data: any,
   loading: 'idle' | 'pending' | 'succeeded' | 'failed',
@@ -11,7 +10,7 @@ interface OriginalDataState {
 
 export const fetchOriginalData = createAsyncThunk(
   'originalData/fetchData',
-  // Declare the type your function argument here:
+
   async () => {
     const response = await fetch('/api/search', {
       method: 'POST',
@@ -25,8 +24,7 @@ export const fetchOriginalData = createAsyncThunk(
       }),
     });
 
-    // Inferred return type: Promise<MyData>
-    return (await response.json()) as MyData;
+    return (response.json());
   }
 );
 
@@ -62,15 +60,10 @@ export const originalDataSlice = createSlice({
   },
 });
 
-interface MyData {
-  // ...
-}
-
-// export const { increment, decrement, incrementByAmount } = originalDataSlice.actions;
-
-// Other code such as selectors can use the imported `RootState` type
-export const getHits = (state: RootState) => state
-  .originalData?.data?.hits?.hits?.map((hit:any) => hit._source) ?? [];
+export const getHits = createSelector(
+  (state: RootState) => state.originalData?.data?.hits?.hits ?? [],
+  (hits: { _source: any }[]) => hits.map((hit) => hit._source)
+);
 
 export const getLoadingStatus = (state: RootState) => state.originalData.loading;
 

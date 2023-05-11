@@ -2,14 +2,15 @@ import { useState } from 'react';
 import { createStyles, Button, SegmentedControl, Box, Center, ActionIcon } from '@mantine/core';
 import { LeftResizable, Fill, TopResizable, ViewPort, Top, SSR, Bottom } from 'react-spaces';
 import { IconEye, IconCode, IconLayoutNavbarExpand, IconLayoutNavbarCollapse } from '@tabler/icons-react';
-
+import { SpotlightProvider } from '@mantine/spotlight';
 import { OriginalData } from '../components/OriginalData/OriginalData';
 import { ResponseSection } from '../components/ResponseSection/ResponseSection';
 import { Header } from '../components/Header/Header';
 import { Editor } from '../components/Editor/Editor';
 import { useAppDispatch } from '../store/hooks';
-import { fetchData } from '../store/sandbox';
+import { fetchData, changeChosenQuery } from '../store/sandbox';
 import { PanelSection } from '../components/PanelSection/PanelSection';
+import { getActions } from '../components/Search/queries';
 
 const useStyles = createStyles(() => ({
     data: { borderTop: '2px solid rgb(52, 52, 52)' },
@@ -26,11 +27,13 @@ const useStyles = createStyles(() => ({
 export default function Sandbox() {
     const { classes } = useStyles();
     const dispatch = useAppDispatch();
-    const [responseMode, setResponseMode] = useState('preview');
+    const [responseMode, setResponseMode] = useState('json');
     const [isCollapse, setIsCollapse] = useState(false);
 
     return (
-        <>
+        <SpotlightProvider
+          actions={getActions(query => dispatch(changeChosenQuery(query)))}
+        >
             <SSR />
             <ViewPort>
                 <Top size={60}>
@@ -39,7 +42,7 @@ export default function Sandbox() {
 
                 <Fill>
                     <LeftResizable size={400} className={classes.editor}>
-                        <PanelSection title="Request">
+                        <PanelSection title="GET /_search">
                             <Button
                               compact
                               size="xs"
@@ -85,7 +88,7 @@ export default function Sandbox() {
                             <PanelSection title="Response">
                                 <SegmentedControl
                                   onChange={setResponseMode}
-                                  defaultValue="preview"
+                                  defaultValue="json"
                                   size="xs"
                                   data={[
                                         {
@@ -117,6 +120,6 @@ export default function Sandbox() {
                     </Fill>
                 </Fill>
             </ViewPort>
-        </>
+        </SpotlightProvider>
     );
 }
