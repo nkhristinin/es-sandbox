@@ -53,18 +53,7 @@ export function applySuggestions(monaco: MonacoEditor, modelUri:string) {
                             items: {
                                 type: 'object',
                                 properties: {
-                                    field3: {
-                                        type: 'object',
-                                        properties: {
-                                            order: {
-                                                type: 'string',
-                                                enum: ['asc', 'desc'],
-                                            },
-                                        },
-                                        required: ['order'],
-                                    },
                                 },
-                                required: ['field3'],
                             },
                         },
                         size: {
@@ -92,34 +81,6 @@ export function applySuggestions(monaco: MonacoEditor, modelUri:string) {
                         },
                         aggs: {
                             type: 'object',
-                            properties: {
-                                agg1: {
-                                    type: 'object',
-                                    properties: {
-                                        terms: {
-                                            type: 'object',
-                                            properties: {
-                                                field4: {
-                                                    type: 'string',
-                                                },
-                                            },
-                                            required: ['field4'],
-                                        },
-                                    },
-                                    required: ['terms'],
-                                },
-                            },
-                        },
-                    },
-                },
-            },
-            {
-                uri: 'http://myserver/bar-schema.json', // id of the second schema
-                schema: {
-                    type: 'object',
-                    properties: {
-                        q1: {
-                            enum: ['x1', 'x2'],
                         },
                     },
                 },

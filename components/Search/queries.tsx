@@ -471,5 +471,6 @@ export const queries = {
 export const getActions = (onTrigger: (query: string) => void) => queries.data.map(query => ({
   title: query.name,
   description: query.description,
+  group: query.category,
   onTrigger: () => onTrigger(query.query),
 }));

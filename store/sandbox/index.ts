@@ -29,9 +29,13 @@ const initialState: SandboxState = {
   chosenQuery: '',
 };
 
+export const getError = (state: RootState) => state.sandbox.error;
+export const getTotalHits = (state:RootState) => state.sandbox?.data?.hits?.total?.value ?? 0;
 export const getHits = createSelector(
   (state: RootState) => state.sandbox?.data?.hits?.hits ?? [],
-  (hits: { _source: any }[]) => hits.map((hit) => hit._source) as Order[]
+  (hits: { _source: any }[]) => hits
+    .filter((hit) => hit._source)
+    .map((hit) => hit._source) as Order[]
 );
 
 function findAggregations(obj: Record<string, any>) {
@@ -179,9 +183,14 @@ export const sandboxSlice = createSlice({
     // Add reducers for additional action types here, and handle loading state as needed
     builder.addCase(fetchData.fulfilled, (state, action) => {
       // Add user to the state array
-      state.data = action.payload;
+      const response = action.payload;
+      state.data = response;
+      if (response.error) {
+        state.error = `${response.error.type}: ${response.error.reason}`;
+      } else {
+        state.error = '';
+      }
       state.loading = 'succeeded';
-      state.error = '';
     });
     builder.addCase(fetchData.rejected, (state, action) => {
       state.loading = 'failed';
