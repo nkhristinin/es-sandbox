@@ -14,12 +14,12 @@ export function HitsTable({
     handlePerRowsChange,
     handleSearch,
 }: {
-    hits: Order[]
-        onSort: (column: any, sortDirection: string) => void,
-        handlePageChange: (page: number) => void,
-        handlePerRowsChange: (perPage: number, page: number) => void,
-        paginationTotalRows: number,
-        handleSearch: (search: string) => void,
+    hits: Order[],
+    onSort?: (column: any, sortDirection: string) => void,
+    handlePageChange?: (page: number) => void,
+    handlePerRowsChange?: (perPage: number, page: number) => void,
+    paginationTotalRows?: number,
+    handleSearch?: (search: string) => void,
 }) {
     const [debounceSearch, setDebounceSearch] = useDebouncedState('', 200);
     const [selectedColumns, setSelectedColumns] = useLocalStorage({ key: 'hits-table', defaultValue: ['category', 'customer_full_name', 'email', 'order_date'] });
@@ -210,9 +210,10 @@ export function HitsTable({
                           size="sm"
                           icon={<IconSearch size="1rem" />}
                           placeholder="Search..."
-                          onChange={(event) => setDebounceSearch(event.currentTarget.value)}
+                          onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
+                                setDebounceSearch(event.currentTarget.value)}
                         />)}
-                    <Switch checked={checked} onChange={(event) => setChecked(event.currentTarget.checked)} label="Columns confuguration" />
+                    <Switch checked={checked} onChange={(event: React.ChangeEvent<HTMLInputElement>) => setChecked(event.currentTarget.checked)} label="Columns confuguration" />
                 </Group>
                 {
                     checked && (<MultiSelect
