@@ -3,7 +3,7 @@
 import { MonacoEditor } from 'monaco-types';
 
 const matchByField = `"match":  { 
-    '"\${1:field}": "\${2:value}"'
+  "\${1:field}": "\${2:value}"
 }`;
 
 function createDependencyProposals(monaco: MonacoEditor, range:any) {
@@ -36,12 +36,16 @@ export function applySuggestions(monaco: MonacoEditor, modelUri:string) {
                             properties: {
                                 match: {
                                     type: 'object',
-                                    properties: {
-                                        field: {
+                                    patternProperties: {
+                                        '^.*$': {
                                             type: 'object',
-                                            properties: {},
+                                            properties: {
+                                                allo: {
+                                                    type: 'string',
+                                                },
+                                            },
                                         },
-                                    },
+                                      },
                                 },
                                 match_all: {
                                     type: 'object',
