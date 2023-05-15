@@ -1,39 +1,20 @@
-# Mantine Next Template
+# ES Sandbox
 
-Get started with Mantine + Next with just a few button clicks.
-Click `Use this template` button at the header of repository or [follow this link](https://github.com/mantinedev/mantine-next-template/generate) and
-create new repository with `@mantine` packages. Note that you have to be logged in to GitHub to generate template.
+ES Sandbox is a web-based tool that allows you to test search queries to Elasticsearch in an interactive mode. It provides a UI for constructing and executing queries, making it easier to explore and experiment with Elasticsearch search capabilities.
 
-## Features
+It's expermintal tool, and don't have full functionality.
 
-This template comes with several essential features:
+## Demo
 
-- Server side rendering setup for Mantine
-- Color scheme is stored in cookie to avoid color scheme mismatch after hydration
-- Storybook with color scheme toggle
-- Jest with react testing library
-- ESLint setup with [eslint-config-mantine](https://github.com/mantinedev/eslint-config-mantine)
+Check out the live demo of ES Sandbox at: [https://es-sandbox-five.vercel.app/](https://es-sandbox-five.vercel.app/)
 
-## npm scripts
 
-### Build and dev scripts
 
-- `dev` – start dev server
-- `build` – bundle application for production
-- `export` – exports static website to `out` folder
-- `analyze` – analyzes application bundle with [@next/bundle-analyzer](https://www.npmjs.com/package/@next/bundle-analyzer)
+## Installation
 
-### Testing scripts
+To run ES Sandbox locally, follow these steps:
 
-- `typecheck` – checks TypeScript types
-- `lint` – runs ESLint
-- `prettier:check` – checks files with Prettier
-- `jest` – runs jest tests
-- `jest:watch` – starts jest watch
-- `test` – runs `jest`, `prettier:check`, `lint` and `typecheck` scripts
 
-### Other scripts
-
-- `storybook` – starts storybook dev server
-- `storybook:build` – build production storybook bundle to `storybook-static`
-- `prettier:write` – formats all files with Prettier
+```shell
+   npm install
+   npm run dev

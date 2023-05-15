@@ -39,9 +39,7 @@ const boolQuery = `{
 const termQuery = `{
   "query": {
     "term": {
-      "customer_gender": {
-        "value": "MALE"
-      }
+      "customer_full_name.keyword": "Jackson Shaw"
     }
   },
   "size": 15
